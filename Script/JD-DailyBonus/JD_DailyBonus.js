@@ -1,46 +1,46 @@
 /*************************
 
- 京东多合一签到脚本
+京东多合一签到脚本
 
- 更新时间: 2021.09.09 20:20 v2.1.3
- 有效接口: 20+
- 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
- 电报频道: @NobyDa
- 问题反馈: @NobyDa_bot
- 如果转载: 请注明出处
+更新时间: 2021.09.09 20:20 v2.1.3
+有效接口: 20+
+脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
+电报频道: @NobyDa
+问题反馈: @NobyDa_bot
+如果转载: 请注明出处
 
- *************************
- 【 QX, Surge, Loon 说明 】 :
- *************************
+*************************
+【 QX, Surge, Loon 说明 】 :
+*************************
 
- 初次使用时, app配置文件添加脚本配置, 并启用Mitm后:
+初次使用时, app配置文件添加脚本配置, 并启用Mitm后:
 
- Safari浏览器打开登录 https://home.m.jd.com/myJd/newhome.action 点击"我的"页面
- 或者使用旧版网址 https://bean.m.jd.com/bean/signIndex.action 点击签到并且出现签到日历
- 如果通知获取Cookie成功, 则可以使用此签到脚本. 注: 请勿在京东APP内获取!!!
+Safari浏览器打开登录 https://home.m.jd.com/myJd/newhome.action 点击"我的"页面
+或者使用旧版网址 https://bean.m.jd.com/bean/signIndex.action 点击签到并且出现签到日历
+如果通知获取Cookie成功, 则可以使用此签到脚本. 注: 请勿在京东APP内获取!!!
 
- 获取京东金融签到Body说明: 正确添加脚本配置后, 进入"京东金融"APP, 在"首页"点击"签到"并签到一次, 待通知提示成功即可.
+获取京东金融签到Body说明: 正确添加脚本配置后, 进入"京东金融"APP, 在"首页"点击"签到"并签到一次, 待通知提示成功即可.
 
- 由于cookie的有效性(经测试网页Cookie有效周期最长31天)，如果脚本后续弹出cookie无效的通知，则需要重复上述步骤。
- 签到脚本将在每天的凌晨0:05执行, 您可以修改执行时间。 因部分接口京豆限量领取, 建议调整为凌晨签到。
+由于cookie的有效性(经测试网页Cookie有效周期最长31天)，如果脚本后续弹出cookie无效的通知，则需要重复上述步骤。
+签到脚本将在每天的凌晨0:05执行, 您可以修改执行时间。 因部分接口京豆限量领取, 建议调整为凌晨签到。
 
- BoxJs或QX Gallery订阅地址: https://raw.githubusercontent.com/NobyDa/Script/master/NobyDa_BoxJs.json
+BoxJs或QX Gallery订阅地址: https://raw.githubusercontent.com/NobyDa/Script/master/NobyDa_BoxJs.json
 
- *************************
- 【 配置多京东账号签到说明 】 :
- *************************
+*************************
+【 配置多京东账号签到说明 】 :
+*************************
 
- 正确配置QX、Surge、Loon后, 并使用此脚本获取"账号1"Cookie成功后, 请勿点击退出账号(可能会导致Cookie失效), 需清除浏览器资料或更换浏览器登录"账号2"获取即可; 账号3或以上同理.
- 注: 如需清除所有Cookie, 您可开启脚本内"DeleteCookie"选项 (第114行)
+正确配置QX、Surge、Loon后, 并使用此脚本获取"账号1"Cookie成功后, 请勿点击退出账号(可能会导致Cookie失效), 需清除浏览器资料或更换浏览器登录"账号2"获取即可; 账号3或以上同理.
+注: 如需清除所有Cookie, 您可开启脚本内"DeleteCookie"选项 (第114行)
 
- *************************
- 【 JSbox, Node.js 说明 】 :
- *************************
+*************************
+【 JSbox, Node.js 说明 】 :
+*************************
 
- 开启抓包app后, Safari浏览器登录 https://home.m.jd.com/myJd/newhome.action 点击个人中心页面后, 返回抓包app搜索关键字 info/GetJDUserInfoUnion 复制请求头Cookie字段填入json串数据内即可
+开启抓包app后, Safari浏览器登录 https://home.m.jd.com/myJd/newhome.action 点击个人中心页面后, 返回抓包app搜索关键字 info/GetJDUserInfoUnion 复制请求头Cookie字段填入json串数据内即可
 
- 如需获取京东金融签到Body, 可进入"京东金融"APP (iOS), 在"首页"点击"签到"并签到一次, 返回抓包app搜索关键字 h5/m/appSign 复制请求体填入json串数据内即可
- */
+如需获取京东金融签到Body, 可进入"京东金融"APP (iOS), 在"首页"点击"签到"并签到一次, 返回抓包app搜索关键字 h5/m/appSign 复制请求体填入json串数据内即可
+*/
 
 var Key = ''; //该参数已废弃; 仅用于下游脚本的兼容, 请使用json串数据 ↓
 
@@ -48,7 +48,7 @@ var DualKey = ''; //该参数已废弃; 仅用于下游脚本的兼容, 请使�
 
 var OtherKey = ``; //无限账号Cookie json串数据, 请严格按照json格式填写, 具体格式请看以下样例:
 
-/*以下样例为双账号("cookie"为必须,其他可选), 第一个账号仅包含Cookie, 第二个账号包含Cookie和金融签到Body: 
+/*以下样例为双账号("cookie"为必须,其他可选), 第一个账号仅包含Cookie, 第二个账号包含Cookie和金融签到Body:
 
 var OtherKey = `[{
   "cookie": "pt_key=xxx;pt_pin=yyy;"
@@ -96,10 +96,10 @@ hostname = ms.jr.jd.com, me-api.jd.com, api.m.jd.com
 5 0 * * * https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js, tag=京东多合一签到, img-url=https://raw.githubusercontent.com/NobyDa/mini/master/Color/jd.png,enabled=true
 
 [rewrite_local]
-# 获取京东Cookie. 
+# 获取京东Cookie.
 ^https:\/\/(api\.m|me-api)\.jd\.com\/(client\.action\?functionId=signBean|user_new\/info\/GetJDUserInfoUnion\?) url script-request-header https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 
-# 获取钢镚签到body. 
+# 获取钢镚签到body.
 ^https:\/\/ms\.jr\.jd\.com\/gw\/generic\/hy\/h5\/m\/appSign\? url script-request-body https://raw.githubusercontent.com/NobyDa/Script/master/JD-DailyBonus/JD_DailyBonus.js
 
 [mitm]
@@ -117,7 +117,7 @@ var boxdis = true; //是否开启自动禁用, false则关闭. 脚本运行崩�
 
 var ReDis = false; //是否移除所有禁用列表, true则开启. 适用于触发自动禁用后, 需要再次启用接口的情况. (该选项仅适用于QX,Surge,Loon)
 
-var out = 6000; //接口超时退出, 用于可能发生的网络不稳定, 0则关闭. 如QX日志出现大量"JS Context timeout"后脚本中断时, 建议填写6000
+var out = 0; //接口超时退出, 用于可能发生的网络不稳定, 0则关闭. 如QX日志出现大量"JS Context timeout"后脚本中断时, 建议填写6000
 
 var $nobyda = nobyda();
 
@@ -133,10 +133,16 @@ async function all(cookie, jrBody) {
     case 0:
       await Promise.all([
         JingDongBean(stop), //京东京豆
+        JingDongStore(stop), //京东超市
         JingRongSteel(stop, jrBody), //金融钢镚
         JingDongTurn(stop), //京东转盘
+        JDFlashSale(stop), //京东闪购
+        JingDongCash(stop), //京东现金红包
         JDMagicCube(stop, 2), //京东小魔方
+        JingDongSubsidy(stop), //京东金贴
+        JingDongGetCash(stop), //京东领现金
         JingDongShake(stop), //京东摇一摇
+        JDSecKilling(stop), //京东秒杀
         // JingRongDoll(stop, 'JRDoll', '京东金融-签壹', '4D25A6F482'),
         // JingRongDoll(stop, 'JRThreeDoll', '京东金融-签叁', '69F5EC743C'),
         // JingRongDoll(stop, 'JRFourDoll', '京东金融-签肆', '30C4F86264'),
@@ -178,6 +184,7 @@ async function all(cookie, jrBody) {
       break;
     default:
       await JingDongBean(0); //京东京豆
+      await JingDongStore(Wait(stop)); //京东超市
       await JingRongSteel(Wait(stop), jrBody); //金融钢镚
       await JingDongTurn(Wait(stop)); //京东转盘
       await JDFlashSale(Wait(stop)); //京东闪购
@@ -349,11 +356,9 @@ function JingDongBean(s) {
       const JDBUrl = {
         url: 'https://api.m.jd.com/client.action',
         headers: {
-          Cookie: KEY,
-          Host: 'api.m.jd.com',
-          Origin: 'https://pro.m.jd.com'
+          Cookie: KEY
         },
-        body: 'appid=signed_wh5_ihub&functionId=signBeanAct'
+        body: 'functionId=signBeanIndex&appid=ld'
       };
       $nobyda.post(JDBUrl, function(error, response, data) {
         try {
@@ -407,6 +412,44 @@ function JingDongBean(s) {
     if (out) setTimeout(resolve, out + s)
   });
 }
+
+// function JingDongTurn(s) {
+//   merge.JDTurn = {}, merge.JDTurn.notify = "", merge.JDTurn.success = 0, merge.JDTurn.bean = 0;
+//   return new Promise((resolve, reject) => {
+//     if (disable("JDTurn")) return reject()
+//     const JDTUrl = {
+//       url: 'https://api.m.jd.com/client.action?functionId=wheelSurfIndex&body=%7B%22actId%22%3A%22jgpqtzjhvaoym%22%2C%22appSource%22%3A%22jdhome%22%7D&appid=ld',
+//       headers: {
+//         Cookie: KEY,
+//       }
+//     };
+//     $nobyda.get(JDTUrl, async function(error, response, data) {
+//       try {
+//         if (error) {
+//           throw new Error(error)
+//         } else {
+//           const cc = JSON.parse(data)
+//           const Details = LogDetails ? "response:\n" + data : '';
+//           if (cc.data && cc.data.lotteryCode) {
+//             console.log("\n" + "京东商城-转盘查询成功 " + Details)
+//             return resolve(cc.data.lotteryCode)
+//           } else {
+//             merge.JDTurn.notify = "京东商城-转盘: 失败, 原因: 查询错误 ⚠️"
+//             merge.JDTurn.fail = 1
+//             console.log("\n" + "京东商城-转盘查询失败 " + Details)
+//           }
+//         }
+//       } catch (eor) {
+//         $nobyda.AnError("京东转盘-查询", "JDTurn", eor, response, data)
+//       } finally {
+//         reject()
+//       }
+//     })
+//     if (out) setTimeout(reject, out + s)
+//   }).then(data => {
+//     return JingDongTurnSign(s, data);
+//   }, () => {});
+// }
 
 function JingDongTurn(s) {
   if (!merge.JDTurn) merge.JDTurn = {}, merge.JDTurn.notify = "", merge.JDTurn.success = 0, merge.JDTurn.bean = 0;
@@ -785,6 +828,121 @@ function JDUserSign1(s, key, title, body) {
   });
 }
 
+async function JDUserSign2(s, key, title, tid) {
+  return console.log(`\n${title} >> 可能需要拼图验证, 跳过签到 ⚠️`);
+  await new Promise(resolve => {
+    $nobyda.get({
+      url: `https://jdjoy.jd.com/api/turncard/channel/detail?turnTableId=${tid}&invokeKey=ztmFUCxcPMNyUq0P`,
+      headers: {
+        Cookie: KEY
+      }
+    }, function(error, response, data) {
+      resolve()
+    })
+    if (out) setTimeout(resolve, out + s)
+  });
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const JDUrl = {
+        url: 'https://jdjoy.jd.com/api/turncard/channel/sign?invokeKey=ztmFUCxcPMNyUq0P',
+        headers: {
+          lkt: '1629984131120',
+          lks: 'd7db92cf40ad5a8d54b9da2b561c5f84',
+          Cookie: KEY
+        },
+        body: `turnTableId=${tid}`
+      };
+      $nobyda.post(JDUrl, function(error, response, data) {
+        try {
+          if (error) {
+            throw new Error(error)
+          } else {
+            const Details = LogDetails ? `response:\n${data}` : '';
+            if (data.match(/\"success\":true/)) {
+              console.log(`\n${title}签到成功(2)${Details}`)
+              if (data.match(/\"jdBeanQuantity\":\d+/)) {
+                merge[key].bean = data.match(/\"jdBeanQuantity\":(\d+)/)[1]
+              }
+              merge[key].notify = `${title}: 成功, 明细: ${merge[key].bean || '无'}京豆 🐶`
+              merge[key].success = 1
+            } else {
+              const captcha = /请进行验证/.test(data);
+              if (data.match(/(已经签到|已经领取)/)) {
+                merge[key].notify = `${title}: 失败, 原因: 已签过 ⚠️`
+              } else if (data.match(/(不存在|已结束|未开始)/)) {
+                merge[key].notify = `${title}: 失败, 原因: 活动已结束 ⚠️`
+              } else if (data.match(/(没有登录|B0001)/)) {
+                merge[key].notify = `${title}: 失败, 原因: Cookie失效‼️`
+              } else if (!captcha) {
+                const ng = data.match(/\"(errorMessage|subCodeMsg)\":\"(.+?)\"/)
+                merge[key].notify = `${title}: 失败, ${ng?ng[2]:`原因: 未知`} ⚠️`
+              }
+              if (!captcha) merge[key].fail = 1;
+              console.log(`\n${title}签到失败(2)${captcha?`\n需要拼图验证, 跳过通知记录 ⚠️`:``}${Details}`)
+            }
+          }
+        } catch (eor) {
+          $nobyda.AnError(title, key, eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, 200 + s)
+    if (out) setTimeout(resolve, out + s + 200)
+  });
+}
+
+function JDFlashSale(s) {
+  merge.JDFSale = {};
+  return new Promise(resolve => {
+    if (disable("JDFSale")) return resolve()
+    setTimeout(() => {
+      const JDPETUrl = {
+        url: 'https://api.m.jd.com/client.action?functionId=partitionJdSgin',
+        headers: {
+          Cookie: KEY
+        },
+        body: "body=%7B%22version%22%3A%22v2%22%7D&client=apple&clientVersion=9.0.8&openudid=1fce88cd05c42fe2b054e846f11bdf33f016d676&sign=6768e2cf625427615dd89649dd367d41&st=1597248593305&sv=121"
+      };
+      $nobyda.post(JDPETUrl, async function(error, response, data) {
+        try {
+          if (error) {
+            throw new Error(error)
+          } else {
+            const Details = LogDetails ? "response:\n" + data : '';
+            const cc = JSON.parse(data)
+            if (cc.result && cc.result.code == 0) {
+              console.log("\n" + "京东商城-闪购签到成功 " + Details)
+              merge.JDFSale.bean = cc.result.jdBeanNum || 0
+              merge.JDFSale.notify = "京东商城-闪购: 成功, 明细: " + (merge.JDFSale.bean || "无") + "京豆 🐶"
+              merge.JDFSale.success = 1
+            } else {
+              console.log("\n" + "京东商城-闪购签到失败 " + Details)
+              if (data.match(/(已签到|已领取|\"2005\")/)) {
+                merge.JDFSale.notify = "京东商城-闪购: 失败, 原因: 已签过 ⚠️"
+              } else if (data.match(/不存在|已结束|\"2008\"|\"3001\"/)) {
+                await FlashSaleDivide(s); //瓜分京豆
+                return
+              } else if (data.match(/(\"code\":\"3\"|\"1003\")/)) {
+                merge.JDFSale.notify = "京东商城-闪购: 失败, 原因: Cookie失效‼️"
+              } else {
+                const msg = data.match(/\"msg\":\"([\u4e00-\u9fa5].+?)\"/)
+                merge.JDFSale.notify = `京东商城-闪购: 失败, ${msg ? msg[1] : `原因: 未知`} ⚠️`
+              }
+              merge.JDFSale.fail = 1
+            }
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东商城-闪购", "JDFSale", eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  });
+}
+
 function FlashSaleDivide(s) {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -824,6 +982,56 @@ function FlashSaleDivide(s) {
           }
         } catch (eor) {
           $nobyda.AnError("京东闪购-瓜分", "JDFSale", eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  });
+}
+
+function JingDongCash(s) {
+  merge.JDCash = {};
+  return new Promise(resolve => {
+    if (disable("JDCash")) return resolve()
+    setTimeout(() => {
+      const JDCAUrl = {
+        url: 'https://api.m.jd.com/client.action?functionId=ccSignInNew',
+        headers: {
+          Cookie: KEY
+        },
+        body: "body=%7B%22pageClickKey%22%3A%22CouponCenter%22%2C%22eid%22%3A%22O5X6JYMZTXIEX4VBCBWEM5PTIZV6HXH7M3AI75EABM5GBZYVQKRGQJ5A2PPO5PSELSRMI72SYF4KTCB4NIU6AZQ3O6C3J7ZVEP3RVDFEBKVN2RER2GTQ%22%2C%22shshshfpb%22%3A%22v1%5C%2FzMYRjEWKgYe%2BUiNwEvaVlrHBQGVwqLx4CsS9PH1s0s0Vs9AWk%2B7vr9KSHh3BQd5NTukznDTZnd75xHzonHnw%3D%3D%22%2C%22childActivityUrl%22%3A%22openapp.jdmobile%253a%252f%252fvirtual%253fparams%253d%257b%255c%2522category%255c%2522%253a%255c%2522jump%255c%2522%252c%255c%2522des%255c%2522%253a%255c%2522couponCenter%255c%2522%257d%22%2C%22monitorSource%22%3A%22cc_sign_ios_index_config%22%7D&client=apple&clientVersion=8.5.0&d_brand=apple&d_model=iPhone8%2C2&openudid=1fce88cd05c42fe2b054e846f11bdf33f016d676&scope=11&screen=1242%2A2208&sign=1cce8f76d53fc6093b45a466e93044da&st=1581084035269&sv=102"
+      };
+      $nobyda.post(JDCAUrl, function(error, response, data) {
+        try {
+          if (error) {
+            throw new Error(error)
+          } else {
+            const Details = LogDetails ? "response:\n" + data : '';
+            const cc = JSON.parse(data)
+            if (cc.busiCode == "0") {
+              console.log("\n" + "京东现金-红包签到成功 " + Details)
+              merge.JDCash.success = 1
+              merge.JDCash.Cash = cc.result.signResult.signData.amount || 0
+              merge.JDCash.notify = `京东现金-红包: 成功, 明细: ${merge.JDCash.Cash || `无`}红包 🧧`
+            } else {
+              console.log("\n" + "京东现金-红包签到失败 " + Details)
+              merge.JDCash.fail = 1
+              if (data.match(/(\"busiCode\":\"1002\"|完成签到)/)) {
+                merge.JDCash.notify = "京东现金-红包: 失败, 原因: 已签过 ⚠️"
+              } else if (data.match(/(不存在|已结束)/)) {
+                merge.JDCash.notify = "京东现金-红包: 失败, 原因: 活动已结束 ⚠️"
+              } else if (data.match(/(\"busiCode\":\"3\"|未登录)/)) {
+                merge.JDCash.notify = "京东现金-红包: 失败, 原因: Cookie失效‼️"
+              } else {
+                const msg = data.split(/\"msg\":\"([\u4e00-\u9fa5].+?)\"/)[1];
+                merge.JDCash.notify = `京东现金-红包: 失败, ${msg||`原因: 未知`} ⚠️`
+              }
+            }
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东现金-红包", "JDCash", eor, response, data)
         } finally {
           resolve()
         }
@@ -920,6 +1128,54 @@ function JDMagicCubeSign(s, id) {
   });
 }
 
+function JingDongSubsidy(s) {
+  merge.subsidy = {};
+  return new Promise(resolve => {
+    if (disable("subsidy")) return resolve()
+    setTimeout(() => {
+      const subsidyUrl = {
+        url: 'https://ms.jr.jd.com/gw/generic/uc/h5/m/signIn7',
+        headers: {
+          Referer: "https://active.jd.com/forever/cashback/index",
+          Cookie: KEY
+        }
+      };
+      $nobyda.get(subsidyUrl, function(error, response, data) {
+        try {
+          if (error) {
+            throw new Error(error)
+          } else {
+            const Details = LogDetails ? "response:\n" + data : '';
+            const cc = JSON.parse(data)
+            if (cc.resultCode == 0 && cc.resultData.data && cc.resultData.data.thisAmount) {
+              console.log("\n" + "京东商城-金贴签到成功 " + Details)
+              merge.subsidy.subsidy = cc.resultData.data.thisAmountStr
+              merge.subsidy.notify = `京东商城-金贴: 成功, 明细: ${merge.subsidy.subsidy||`无`}金贴 💰`
+              merge.subsidy.success = 1
+            } else {
+              console.log("\n" + "京东商城-金贴签到失败 " + Details)
+              merge.subsidy.fail = 1
+              if (data.match(/已存在|"thisAmount":0/)) {
+                merge.subsidy.notify = "京东商城-金贴: 失败, 原因: 无金贴 ⚠️"
+              } else if (data.match(/请先登录/)) {
+                merge.subsidy.notify = "京东商城-金贴: 失败, 原因: Cookie失效‼️"
+              } else {
+                const msg = data.split(/\"msg\":\"([\u4e00-\u9fa5].+?)\"/)[1];
+                merge.subsidy.notify = `京东商城-金贴: 失败, ${msg||`原因: 未知`} ⚠️`
+              }
+            }
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东商城-金贴", "subsidy", eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  });
+}
+
 function JingRongDoll(s, key, title, code, type, num, award, belong) {
   merge[key] = {};
   return new Promise(resolve => {
@@ -1007,6 +1263,164 @@ function JingRongDoll(s, key, title, code, type, num, award, belong) {
     }, s)
     if (out) setTimeout(resolve, out + s)
   });
+}
+
+function JingDongGetCash(s) {
+  merge.JDGetCash = {};
+  return new Promise(resolve => {
+    if (disable("JDGetCash")) return resolve()
+    setTimeout(() => {
+      const GetCashUrl = {
+        url: 'https://api.m.jd.com/client.action?functionId=cash_sign&body=%7B%22remind%22%3A0%2C%22inviteCode%22%3A%22%22%2C%22type%22%3A0%2C%22breakReward%22%3A0%7D&client=apple&clientVersion=9.0.8&openudid=1fce88cd05c42fe2b054e846f11bdf33f016d676&sign=7e2f8bcec13978a691567257af4fdce9&st=1596954745073&sv=111',
+        headers: {
+          Cookie: KEY,
+        }
+      };
+      $nobyda.get(GetCashUrl, function(error, response, data) {
+        try {
+          if (error) {
+            throw new Error(error)
+          } else {
+            const cc = JSON.parse(data);
+            const Details = LogDetails ? "response:\n" + data : '';
+            if (cc.data.success && cc.data.result) {
+              console.log("\n" + "京东商城-现金签到成功 " + Details)
+              merge.JDGetCash.success = 1
+              merge.JDGetCash.Money = cc.data.result.signCash || 0
+              merge.JDGetCash.notify = `京东商城-现金: 成功, 明细: ${cc.data.result.signCash||`无`}现金 💰`
+            } else {
+              console.log("\n" + "京东商城-现金签到失败 " + Details)
+              merge.JDGetCash.fail = 1
+              if (data.match(/\"bizCode\":201|已经签过/)) {
+                merge.JDGetCash.notify = "京东商城-现金: 失败, 原因: 已签过 ⚠️"
+              } else if (data.match(/\"code\":300|退出登录/)) {
+                merge.JDGetCash.notify = "京东商城-现金: 失败, 原因: Cookie失效‼️"
+              } else {
+                merge.JDGetCash.notify = "京东商城-现金: 失败, 原因: 未知 ⚠️"
+              }
+            }
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东商城-现金", "JDGetCash", eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  });
+}
+
+function JingDongStore(s) {
+  merge.JDGStore = {};
+  return new Promise(resolve => {
+    if (disable("JDGStore")) return resolve()
+    setTimeout(() => {
+      $nobyda.get({
+        url: 'https://api.m.jd.com/api?appid=jdsupermarket&functionId=smtg_sign&clientVersion=8.0.0&client=m&body=%7B%7D',
+        headers: {
+          Cookie: KEY,
+          Origin: `https://jdsupermarket.jd.com`
+        }
+      }, (error, response, data) => {
+        try {
+          if (error) throw new Error(error);
+          const cc = JSON.parse(data);
+          const Details = LogDetails ? "response:\n" + data : '';
+          if (cc.data && cc.data.success === true && cc.data.bizCode === 0) {
+            console.log(`\n京东商城-超市签到成功 ${Details}`)
+            merge.JDGStore.success = 1
+            merge.JDGStore.bean = cc.data.result.jdBeanCount || 0
+            merge.JDGStore.notify = `京东商城-超市: 成功, 明细: ${merge.JDGStore.bean||`无`}京豆 🐶`
+          } else {
+            if (!cc.data) cc.data = {}
+            console.log(`\n京东商城-超市签到失败 ${Details}`)
+            const tp = cc.data.bizCode == 811 ? `已签过` : cc.data.bizCode == 300 ? `Cookie失效` : `${cc.data.bizMsg||`未知`}`
+            merge.JDGStore.notify = `京东商城-超市: 失败, 原因: ${tp}${cc.data.bizCode==300?`‼️`:` ⚠️`}`
+            merge.JDGStore.fail = 1
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东商城-超市", "JDGStore", eor, response, data)
+        } finally {
+          resolve()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  });
+}
+
+function JDSecKilling(s) { //领券中心
+  merge.JDSecKill = {};
+  return new Promise((resolve, reject) => {
+    if (disable("JDSecKill")) return reject();
+    setTimeout(() => {
+      $nobyda.post({
+        url: 'https://api.m.jd.com/client.action',
+        headers: {
+          Cookie: KEY,
+          Origin: 'https://h5.m.jd.com'
+        },
+        body: 'functionId=homePageV2&appid=SecKill2020'
+      }, (error, response, data) => {
+        try {
+          if (error) throw new Error(error);
+          const Details = LogDetails ? "response:\n" + data : '';
+          const cc = JSON.parse(data);
+          if (cc.code == 203 || cc.code == 3 || cc.code == 101) {
+            merge.JDSecKill.notify = `京东秒杀-红包: 失败, 原因: Cookie失效‼️`;
+          } else if (cc.result && cc.result.projectId && cc.result.taskId) {
+            console.log(`\n京东秒杀-红包查询成功 ${Details}`)
+            return resolve({
+              projectId: cc.result.projectId,
+              taskId: cc.result.taskId
+            })
+          } else {
+            merge.JDSecKill.notify = `京东秒杀-红包: 失败, 暂无有效活动 ⚠️`;
+          }
+          merge.JDSecKill.fail = 1;
+          console.log(`\n京东秒杀-红包查询失败 ${Details}`)
+          reject()
+        } catch (eor) {
+          $nobyda.AnError("京东秒杀-查询", "JDSecKill", eor, response, data)
+          reject()
+        }
+      })
+    }, s)
+    if (out) setTimeout(resolve, out + s)
+  }).then(async (id) => {
+    await new Promise(resolve => {
+      $nobyda.post({
+        url: 'https://api.m.jd.com/client.action',
+        headers: {
+          Cookie: KEY,
+          Origin: 'https://h5.m.jd.com'
+        },
+        body: `functionId=doInteractiveAssignment&body=%7B%22encryptProjectId%22%3A%22${id.projectId}%22%2C%22encryptAssignmentId%22%3A%22${id.taskId}%22%2C%22completionFlag%22%3Atrue%7D&client=wh5&appid=SecKill2020`
+      }, (error, response, data) => {
+        try {
+          if (error) throw new Error(error);
+          const Details = LogDetails ? "response:\n" + data : '';
+          const cc = JSON.parse(data);
+          if (cc.code == 0 && cc.subCode == 0) {
+            console.log(`\n京东秒杀-红包签到成功 ${Details}`);
+            const qt = data.match(/"discount":(\d.*?),/);
+            merge.JDSecKill.success = 1;
+            merge.JDSecKill.Cash = qt ? qt[1] : 0;
+            merge.JDSecKill.notify = `京东秒杀-红包: 成功, 明细: ${merge.JDSecKill.Cash||`无`}红包 🧧`;
+          } else {
+            console.log(`\n京东秒杀-红包签到失败 ${Details}`);
+            merge.JDSecKill.fail = 1;
+            merge.JDSecKill.notify = `京东秒杀-红包: 失败, ${cc.subCode==103?`原因: 已领取`:cc.msg?cc.msg:`原因: 未知`} ⚠️`;
+          }
+        } catch (eor) {
+          $nobyda.AnError("京东秒杀-领取", "JDSecKill", eor, response, data);
+        } finally {
+          resolve();
+        }
+      })
+    })
+  }, () => {});
 }
 
 function TotalSteel() {
@@ -1320,237 +1734,239 @@ function GetCookie() {
 
 // Modified from yichahucha
 function nobyda() {
-    const start = Date.now()
-    const isRequest = typeof $request != "undefined"
-    const isSurge = typeof $httpClient != "undefined"
-    const isQuanX = typeof $task != "undefined"
-    const isLoon = typeof $loon != "undefined"
-    const isJSBox = typeof $app != "undefined" && typeof $http != "undefined"
-    const isNode = typeof require == "function" && !isJSBox;
-    const NodeSet = 'CookieSet.json'
-    const node = (() => {
-        if (isNode) {
-            const request = require('request');
-            const fs = require("fs");
-            const path = require("path");
-            return ({
-                request,
-                fs,
-                path
-            })
-        } else {
-            return (null)
-        }
-    })()
-    const notify = (title, subtitle, message, rawopts) => {
-        const Opts = (rawopts) => { //Modified from https://github.com/chavyleung/scripts/blob/master/Env.js
-            if (!rawopts) return rawopts
-            if (typeof rawopts === 'string') {
-                if (isLoon) return rawopts
-                else if (isQuanX) return {
-                    'open-url': rawopts
-                }
-                else if (isSurge) return {
-                    url: rawopts
-                }
-                else return undefined
-            } else if (typeof rawopts === 'object') {
-                if (isLoon) {
-                    let openUrl = rawopts.openUrl || rawopts.url || rawopts['open-url']
-                    let mediaUrl = rawopts.mediaUrl || rawopts['media-url']
-                    return {
-                        openUrl,
-                        mediaUrl
-                    }
-                } else if (isQuanX) {
-                    let openUrl = rawopts['open-url'] || rawopts.url || rawopts.openUrl
-                    let mediaUrl = rawopts['media-url'] || rawopts.mediaUrl
-                    return {
-                        'open-url': openUrl,
-                        'media-url': mediaUrl
-                    }
-                } else if (isSurge) {
-                    let openUrl = rawopts.url || rawopts.openUrl || rawopts['open-url']
-                    return {
-                        url: openUrl
-                    }
-                }
-            } else {
-                return undefined
-            }
-        }
-        console.log(`${title}\n${subtitle}\n${message}`)
-        if (isQuanX) $notify(title, subtitle, message, Opts(rawopts))
-        if (isSurge) $notification.post(title, subtitle, message, Opts(rawopts))
-        if (isJSBox) $push.schedule({
-            title: title,
-            body: subtitle ? subtitle + "\n" + message : message
-        })
+  const start = Date.now()
+  const isRequest = typeof $request != "undefined"
+  const isSurge = typeof $httpClient != "undefined"
+  const isQuanX = typeof $task != "undefined"
+  const isLoon = typeof $loon != "undefined"
+  const isJSBox = typeof $app != "undefined" && typeof $http != "undefined"
+  const isNode = typeof require == "function" && !isJSBox;
+  const NodeSet = 'CookieSet.json'
+  const node = (() => {
+    if (isNode) {
+      const request = require('request');
+      const fs = require("fs");
+      const path = require("path");
+      return ({
+        request,
+        fs,
+        path
+      })
+    } else {
+      return (null)
     }
-    const write = (value, key) => {
-        if (isQuanX) return $prefs.setValueForKey(value, key)
-        if (isSurge) return $persistentStore.write(value, key)
-        if (isNode) {
-            try {
-                if (!node.fs.existsSync(node.path.resolve(__dirname, NodeSet)))
-                    node.fs.writeFileSync(node.path.resolve(__dirname, NodeSet), JSON.stringify({}));
-                const dataValue = JSON.parse(node.fs.readFileSync(node.path.resolve(__dirname, NodeSet)));
-                if (value) dataValue[key] = value;
-                if (!value) delete dataValue[key];
-                return node.fs.writeFileSync(node.path.resolve(__dirname, NodeSet), JSON.stringify(dataValue));
-            } catch (er) {
-                return AnError('Node.js持久化写入', null, er);
-            }
+  })()
+  const notify = (title, subtitle, message, rawopts) => {
+    const Opts = (rawopts) => { //Modified from https://github.com/chavyleung/scripts/blob/master/Env.js
+      if (!rawopts) return rawopts
+      if (typeof rawopts === 'string') {
+        if (isLoon) return rawopts
+        else if (isQuanX) return {
+          'open-url': rawopts
         }
-        if (isJSBox) {
-            if (!value) return $file.delete(`shared://${key}.txt`);
-            return $file.write({
-                data: $data({
-                    string: value
-                }),
-                path: `shared://${key}.txt`
-            })
+        else if (isSurge) return {
+          url: rawopts
         }
+        else return undefined
+      } else if (typeof rawopts === 'object') {
+        if (isLoon) {
+          let openUrl = rawopts.openUrl || rawopts.url || rawopts['open-url']
+          let mediaUrl = rawopts.mediaUrl || rawopts['media-url']
+          return {
+            openUrl,
+            mediaUrl
+          }
+        } else if (isQuanX) {
+          let openUrl = rawopts['open-url'] || rawopts.url || rawopts.openUrl
+          let mediaUrl = rawopts['media-url'] || rawopts.mediaUrl
+          return {
+            'open-url': openUrl,
+            'media-url': mediaUrl
+          }
+        } else if (isSurge) {
+          let openUrl = rawopts.url || rawopts.openUrl || rawopts['open-url']
+          return {
+            url: openUrl
+          }
+        }
+      } else {
+        return undefined
+      }
     }
-    const read = (key) => {
-        if (isQuanX) return $prefs.valueForKey(key)
-        if (isSurge) return $persistentStore.read(key)
-        if (isNode) {
-            try {
-                if (!node.fs.existsSync(node.path.resolve(__dirname, NodeSet))) return null;
-                const dataValue = JSON.parse(node.fs.readFileSync(node.path.resolve(__dirname, NodeSet)))
-                return dataValue[key]
-            } catch (er) {
-                return AnError('Node.js持久化读取', null, er)
-            }
-        }
-        if (isJSBox) {
-            if (!$file.exists(`shared://${key}.txt`)) return null;
-            return $file.read(`shared://${key}.txt`).string
-        }
+    console.log(`${title}\n${subtitle}\n${message}`)
+    if (isQuanX) $notify(title, subtitle, message, Opts(rawopts))
+    if (isSurge) $notification.post(title, subtitle, message, Opts(rawopts))
+    if (isJSBox) $push.schedule({
+      title: title,
+      body: subtitle ? subtitle + "\n" + message : message
+    })
+  }
+  const write = (value, key) => {
+    if (isQuanX) return $prefs.setValueForKey(value, key)
+    if (isSurge) return $persistentStore.write(value, key)
+    if (isNode) {
+      try {
+        if (!node.fs.existsSync(node.path.resolve(__dirname, NodeSet)))
+          node.fs.writeFileSync(node.path.resolve(__dirname, NodeSet), JSON.stringify({}));
+        const dataValue = JSON.parse(node.fs.readFileSync(node.path.resolve(__dirname, NodeSet)));
+        if (value) dataValue[key] = value;
+        if (!value) delete dataValue[key];
+        return node.fs.writeFileSync(node.path.resolve(__dirname, NodeSet), JSON.stringify(dataValue));
+      } catch (er) {
+        return AnError('Node.js持久化写入', null, er);
+      }
     }
-    const adapterStatus = (response) => {
-        if (response) {
-            if (response.status) {
-                response["statusCode"] = response.status
-            } else if (response.statusCode) {
-                response["status"] = response.statusCode
-            }
-        }
-        return response
+    if (isJSBox) {
+      if (!value) return $file.delete(`shared://${key}.txt`);
+      return $file.write({
+        data: $data({
+          string: value
+        }),
+        path: `shared://${key}.txt`
+      })
     }
-    const get = (options, callback) => {
-        options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
-        if (isQuanX) {
-            if (typeof options == "string") options = {
-                url: options
-            }
-            options["method"] = "GET"
-            $task.fetch(options).then(response => {
-                callback(null, adapterStatus(response), response.body)
-            }, reason => callback(reason.error, null, null))
-        }
-        if (isSurge) {
-            options.headers['X-Surge-Skip-Scripting'] = false
-            $httpClient.get(options, (error, response, body) => {
-                callback(error, adapterStatus(response), body)
-            })
-        }
-        if (isNode) {
-            node.request(options, (error, response, body) => {
-                callback(error, adapterStatus(response), body)
-            })
-        }
-        if (isJSBox) {
-            if (typeof options == "string") options = {
-                url: options
-            }
-            options["header"] = options["headers"]
-            options["handler"] = function (resp) {
-                let error = resp.error;
-                if (error) error = JSON.stringify(resp.error)
-                let body = resp.data;
-                if (typeof body == "object") body = JSON.stringify(resp.data);
-                callback(error, adapterStatus(resp.response), body)
-            };
-            $http.get(options);
-        }
+  }
+  const read = (key) => {
+    if (isQuanX) return $prefs.valueForKey(key)
+    if (isSurge) return $persistentStore.read(key)
+    if (isNode) {
+      try {
+        if (!node.fs.existsSync(node.path.resolve(__dirname, NodeSet))) return null;
+        const dataValue = JSON.parse(node.fs.readFileSync(node.path.resolve(__dirname, NodeSet)))
+        return dataValue[key]
+      } catch (er) {
+        return AnError('Node.js持久化读取', null, er)
+      }
     }
-    const post = (options, callback) => {
-        options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
-        if (options.body) {
-            options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            options.headers['Host'] = 'api.m.jd.com'
-            options.headers['Origin'] = 'https://pro.m.jd.com'
-        }
-        if (isQuanX) {
-            if (typeof options == "string") options = {
-                url: options
-            }
-            options["method"] = "POST"
-            $task.fetch(options).then(response => {
-                callback(null, adapterStatus(response), response.body)
-            }, reason => callback(reason.error, null, null))
-        }
-        if (isSurge) {
-            options.headers['X-Surge-Skip-Scripting'] = false
-            $httpClient.post(options, (error, response, body) => {
-                callback(error, adapterStatus(response), body)
-            })
-        }
-        if (isNode) {
-            node.request.post(options, (error, response, body) => {
-                callback(error, adapterStatus(response), body)
-            })
-        }
-        if (isJSBox) {
-            if (typeof options == "string") options = {
-                url: options
-            }
-            options["header"] = options["headers"]
-            options["handler"] = function (resp) {
-                let error = resp.error;
-                if (error) error = JSON.stringify(resp.error)
-                let body = resp.data;
-                if (typeof body == "object") body = JSON.stringify(resp.data)
-                callback(error, adapterStatus(resp.response), body)
-            }
-            $http.post(options);
-        }
+    if (isJSBox) {
+      if (!$file.exists(`shared://${key}.txt`)) return null;
+      return $file.read(`shared://${key}.txt`).string
     }
-    const AnError = (name, keyname, er, resp, body) => {
-        if (typeof (merge) != "undefined" && keyname) {
-            if (!merge[keyname].notify) {
-                merge[keyname].notify = `${name}: 异常, 已输出日志 ‼️`
-            } else {
-                merge[keyname].notify += `\n${name}: 异常, 已输出日志 ‼️ (2)`
-            }
-            merge[keyname].error = 1
-        }
-        return console.log(`\n‼️${name}发生错误\n‼️名称: ${er.name}\n‼️描述: ${er.message}${JSON.stringify(er).match(/\"line\"/) ? `\n‼️行列: ${JSON.stringify(er)}` : ``}${resp && resp.status ? `\n‼️状态: ${resp.status}` : ``}${body ? `\n‼️响应: ${resp && resp.status != 503 ? body : `Omit.`}` : ``}`)
+  }
+  const adapterStatus = (response) => {
+    if (response) {
+      if (response.status) {
+        response["statusCode"] = response.status
+      } else if (response.statusCode) {
+        response["status"] = response.statusCode
+      }
     }
-    const time = () => {
-        const end = ((Date.now() - start) / 1000).toFixed(2)
-        return console.log('\n签到用时: ' + end + ' 秒')
+    return response
+  }
+  const get = (options, callback) => {
+    options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
+    if (isQuanX) {
+      if (typeof options == "string") options = {
+        url: options
+      }
+      options["method"] = "GET"
+      //options["opts"] = {
+      //  "hints": false
+      //}
+      $task.fetch(options).then(response => {
+        callback(null, adapterStatus(response), response.body)
+      }, reason => callback(reason.error, null, null))
     }
-    const done = (value = {}) => {
-        if (isQuanX) return $done(value)
-        if (isSurge) isRequest ? $done(value) : $done()
+    if (isSurge) {
+      options.headers['X-Surge-Skip-Scripting'] = false
+      $httpClient.get(options, (error, response, body) => {
+        callback(error, adapterStatus(response), body)
+      })
     }
-    return {
-        AnError,
-        isRequest,
-        isJSBox,
-        isSurge,
-        isQuanX,
-        isLoon,
-        isNode,
-        notify,
-        write,
-        read,
-        get,
-        post,
-        time,
-        done
+    if (isNode) {
+      node.request(options, (error, response, body) => {
+        callback(error, adapterStatus(response), body)
+      })
     }
+    if (isJSBox) {
+      if (typeof options == "string") options = {
+        url: options
+      }
+      options["header"] = options["headers"]
+      options["handler"] = function(resp) {
+        let error = resp.error;
+        if (error) error = JSON.stringify(resp.error)
+        let body = resp.data;
+        if (typeof body == "object") body = JSON.stringify(resp.data);
+        callback(error, adapterStatus(resp.response), body)
+      };
+      $http.get(options);
+    }
+  }
+  const post = (options, callback) => {
+    options.headers['User-Agent'] = 'JD4iPhone/167169 (iPhone; iOS 13.4.1; Scale/3.00)'
+    if (options.body) options.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+    if (isQuanX) {
+      if (typeof options == "string") options = {
+        url: options
+      }
+      options["method"] = "POST"
+      //options["opts"] = {
+      //  "hints": false
+      //}
+      $task.fetch(options).then(response => {
+        callback(null, adapterStatus(response), response.body)
+      }, reason => callback(reason.error, null, null))
+    }
+    if (isSurge) {
+      options.headers['X-Surge-Skip-Scripting'] = false
+      $httpClient.post(options, (error, response, body) => {
+        callback(error, adapterStatus(response), body)
+      })
+    }
+    if (isNode) {
+      node.request.post(options, (error, response, body) => {
+        callback(error, adapterStatus(response), body)
+      })
+    }
+    if (isJSBox) {
+      if (typeof options == "string") options = {
+        url: options
+      }
+      options["header"] = options["headers"]
+      options["handler"] = function(resp) {
+        let error = resp.error;
+        if (error) error = JSON.stringify(resp.error)
+        let body = resp.data;
+        if (typeof body == "object") body = JSON.stringify(resp.data)
+        callback(error, adapterStatus(resp.response), body)
+      }
+      $http.post(options);
+    }
+  }
+  const AnError = (name, keyname, er, resp, body) => {
+    if (typeof(merge) != "undefined" && keyname) {
+      if (!merge[keyname].notify) {
+        merge[keyname].notify = `${name}: 异常, 已输出日志 ‼️`
+      } else {
+        merge[keyname].notify += `\n${name}: 异常, 已输出日志 ‼️ (2)`
+      }
+      merge[keyname].error = 1
+    }
+    return console.log(`\n‼️${name}发生错误\n‼️名称: ${er.name}\n‼️描述: ${er.message}${JSON.stringify(er).match(/\"line\"/)?`\n‼️行列: ${JSON.stringify(er)}`:``}${resp&&resp.status?`\n‼️状态: ${resp.status}`:``}${body?`\n‼️响应: ${resp&&resp.status!=503?body:`Omit.`}`:``}`)
+  }
+  const time = () => {
+    const end = ((Date.now() - start) / 1000).toFixed(2)
+    return console.log('\n签到用时: ' + end + ' 秒')
+  }
+  const done = (value = {}) => {
+    if (isQuanX) return $done(value)
+    if (isSurge) isRequest ? $done(value) : $done()
+  }
+  return {
+    AnError,
+    isRequest,
+    isJSBox,
+    isSurge,
+    isQuanX,
+    isLoon,
+    isNode,
+    notify,
+    write,
+    read,
+    get,
+    post,
+    time,
+    done
+  }
 };
